@@ -458,16 +458,14 @@
     </div>
   </div>
 
- <audio id="bgMusic">
-  <source src="https://afrdsss54.github.io/birthday-milasalsa/music.mp3" type="audio/mpeg">
-</audio>
+  <audio autoplay loop>
+    <source src="music.mp3" type="audio/mp3">
+  </audio>
 
   <div class="music">
     <div class="spotify-card">
       <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=500&auto=format&fit=crop" alt="album">
-<button class="btn" onclick="playMusic()">
-  Play Music 🎵
-</button>
+
       <div class="spotify-info">
         <span class="now-playing">NOW PLAYING</span>
         <h4>Perfect</h4>
@@ -560,8 +558,8 @@
       <div class="gallery">
         <img src="https://afrdsss54.github.io/birthday-milasalsa/foto1.png">
         <img src="https://afrdsss54.github.io/birthday-milasalsa/foto2.jpg">
-        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=1000&auto=format&fit=crop">
-        <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?q=80&w=1000&auto=format&fit=crop">
+        <img src="https://afrdsss54.github.io/birthday-milasalsa/foto1.png">
+        <img src="https://afrdsss54.github.io/birthday-milasalsa/foto2.jpg">
       </div>
     </div>
   </section>
@@ -654,18 +652,6 @@
       document.getElementById('minutes').innerHTML = minutes;
       document.getElementById('seconds').innerHTML = seconds;
     }, 1000);
-    function playMusic() {
-  const music = document.getElementById('bgMusic');
-
-  music.play()
-    .then(() => {
-      console.log('Music playing');
-    })
-    .catch((err) => {
-      console.log(err);
-      alert('Browser memblokir autoplay 😢');
-    });
-}
   </script>
 
 </body>
