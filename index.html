@@ -380,20 +380,38 @@ button:hover{
 
 .gallery{
 
+  .gallery{
+
   display:grid;
 
   grid-template-columns:
-  repeat(auto-fit,minmax(240px,1fr));
+  repeat(auto-fit,minmax(180px,1fr));
 
   gap:20px;
+
+  max-width:1000px;
+
+  margin:auto;
 }
 
 .gallery img{
 
   width:100%;
-  height:340px;
+
+  height:420px;
 
   object-fit:cover;
+
+  border-radius:25px;
+
+  border:
+  2px solid rgba(255,0,128,0.4);
+
+  box-shadow:
+  0 0 25px rgba(255,0,128,0.35);
+
+  transition:0.4s;
+}
 
   border-radius:25px;
 
@@ -698,11 +716,14 @@ button:hover{
 
   <div class="gallery">
 
-    <img src="foto1.jpg">
-    <img src="foto2.jpg">
-    <img src="foto3.jpg">
+  <img src="foto1.jpg">
+  <img src="foto2.jpg">
+  <img src="foto3.jpg">
+  <img src="foto4.jpg">
+  <img src="foto5.jpg">
+  <img src="foto6.jpg">
 
-  </div>
+</div>
 
 </section>
 
