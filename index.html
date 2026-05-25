@@ -458,8 +458,8 @@
     </div>
   </div>
 
- <audio id="bgMusic" loop>
-  <source src="music.mp3" type="audio/mp3">
+ <audio id="bgMusic">
+  <source src="music.mp3" type="audio/mpeg">
 </audio>
 
   <div class="music">
@@ -556,8 +556,8 @@
       <h2 class="section-title">Our Memories 📸</h2>
 
       <div class="gallery">
-        <img src="https://github.com/afrdsss54/birthday-milasalsa/blob/main/foto1.png">
-        <img src="https://github.com/afrdsss54/birthday-milasalsa/blob/main/foto2.png">
+        <img src="https://afrdsss54.github.io/birthday-milasalsa/foto1.png">
+        <img src="https://afrdsss54.github.io/birthday-milasalsa/foto2.jpg">
         <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=1000&auto=format&fit=crop">
         <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?q=80&w=1000&auto=format&fit=crop">
       </div>
@@ -601,16 +601,7 @@
     </div>
   </section>
 
-
-    <script>
-  window.addEventListener('click', () => {
-    const music = document.getElementById('bgMusic');
-
-    if (music.paused) {
-      music.play();
-    }
-  });
-</script>
+  <script>
     function checkPassword() {
       const password = document.getElementById('passwordInput').value;
 
@@ -661,6 +652,18 @@
       document.getElementById('minutes').innerHTML = minutes;
       document.getElementById('seconds').innerHTML = seconds;
     }, 1000);
+    function playMusic() {
+  const music = document.getElementById('bgMusic');
+
+  music.play()
+    .then(() => {
+      console.log('Music playing');
+    })
+    .catch((err) => {
+      console.log(err);
+      alert('Browser memblokir autoplay 😢');
+    });
+}
   </script>
 
 </body>
