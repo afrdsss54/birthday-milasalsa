@@ -1,5 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Happy Birthday ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
 /* ========================= */
-/* FIXED FULL ROMANTIC STYLE */
+/* FIXED ROMANTIC WEBSITE ❤️ */
 /* ========================= */
 
 *{
@@ -19,12 +31,30 @@ body{
   linear-gradient(
     180deg,
     #1a001f 0%,
-    #4b003c 40%,
+    #4b003c 45%,
     #870048 100%
   );
 
   color:white;
   position:relative;
+}
+
+/* FLOWERS */
+
+.flower{
+  position:fixed;
+  top:-20px;
+  pointer-events:none;
+  z-index:1;
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+  to{
+    transform:
+    translateY(110vh)
+    rotate(360deg);
+  }
 }
 
 /* SECTION */
@@ -46,15 +76,18 @@ section{
 }
 
 .hero-content{
+
   width:100%;
   max-width:720px;
-  padding:50px 35px;
-  border-radius:35px;
 
   background:
   rgba(255,255,255,0.08);
 
   backdrop-filter:blur(14px);
+
+  padding:50px 35px;
+
+  border-radius:35px;
 
   border:
   1px solid rgba(255,255,255,0.12);
@@ -83,9 +116,13 @@ section{
 /* BUTTON */
 
 button{
+
   margin-top:28px;
+
   border:none;
+
   padding:15px 38px;
+
   border-radius:999px;
 
   background:
@@ -107,27 +144,6 @@ button{
 
 button:hover{
   transform:scale(1.05);
-}
-
-/* FLOWER RAIN */
-
-.flower{
-  position:fixed;
-  top:-20px;
-  pointer-events:none;
-  z-index:1;
-
-  animation:fall linear forwards;
-}
-
-@keyframes fall{
-
-  to{
-    transform:
-    translateY(110vh)
-    rotate(360deg);
-  }
-
 }
 
 /* SPOTIFY */
@@ -169,7 +185,6 @@ button:hover{
 
   border-radius:16px;
   object-fit:cover;
-
 }
 
 .spotify-info{
@@ -407,3 +422,194 @@ button:hover{
   }
 
 }
+
+</style>
+</head>
+
+<body>
+
+<!-- FLOWER RAIN -->
+<div class="flowers"></div>
+
+<!-- MUSIC PLAYER -->
+<div class="spotify-card">
+
+  <img src="https://i.scdn.co/image/ab67616d0000b27350a3147b4edd7701a876c6ce">
+
+  <div class="spotify-info">
+
+    <h3>Perfect ❤️</h3>
+
+    <p>Ed Sheeran</p>
+
+    <div class="progress-bar">
+      <div class="progress"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- HERO -->
+<section class="hero">
+
+  <div class="hero-content">
+
+    <h1>
+      Happy Birthday <br>
+      Mila Salsa ❤️
+    </h1>
+
+    <p>
+      You are my today and all of my tomorrows ✨
+    </p>
+
+    <button onclick="openEnvelope()">
+      Open Surprise 💌
+    </button>
+
+  </div>
+
+</section>
+
+<!-- LETTER -->
+<section class="letter-section">
+
+  <div class="envelope">
+
+    <div class="top"></div>
+
+    <div class="paper">
+
+      <h2>For Mila ❤️</h2>
+
+      <p>
+        Selamat ulang tahun sayang ❤️ <br><br>
+
+        Terima kasih sudah hadir di hidupku dan membuat semuanya terasa lebih indah.
+
+        Aku harap di umur baru ini semua impian kamu tercapai, sehat selalu, dan bahagia terus yaa ✨
+
+        I love you endlessly 💖
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- GALLERY -->
+<section class="gallery">
+
+  <img src="foto1.jpg">
+  <img src="foto2.jpg">
+  <img src="foto3.jpg">
+
+</section>
+
+<!-- QR -->
+<section class="qr-section">
+
+  <h2>Scan For Surprise ❤️</h2>
+
+  <img src="qr.png" class="qr">
+
+</section>
+
+<!-- YOUTUBE MUSIC -->
+<div id="youtube-player"></div>
+
+<script>
+
+/* FLOWER RAIN */
+
+function createFlower(){
+
+  const flower=document.createElement('div');
+
+  flower.classList.add('flower');
+
+  flower.innerHTML='🌸';
+
+  flower.style.left=Math.random()*100+'vw';
+
+  flower.style.fontSize=
+  Math.random()*20+15+'px';
+
+  flower.style.animationDuration=
+  Math.random()*5+5+'s';
+
+  document.body.appendChild(flower);
+
+  setTimeout(()=>{
+    flower.remove();
+  },10000);
+
+}
+
+setInterval(createFlower,300);
+
+/* ENVELOPE */
+
+function openEnvelope(){
+
+  document
+  .querySelector('.envelope')
+  .classList.toggle('open');
+
+}
+
+/* YOUTUBE MUSIC */
+
+var tag=document.createElement('script');
+
+tag.src=
+"https://www.youtube.com/iframe_api";
+
+var firstScriptTag=
+document.getElementsByTagName('script')[0];
+
+firstScriptTag.parentNode
+.insertBefore(tag,firstScriptTag);
+
+var player;
+
+function onYouTubeIframeAPIReady(){
+
+  player=new YT.Player(
+    'youtube-player',
+    {
+      height:'0',
+      width:'0',
+
+      videoId:'2Vv-BfVoq4g',
+
+      playerVars:{
+        autoplay:1,
+        loop:1,
+        controls:0,
+        playlist:'2Vv-BfVoq4g'
+      },
+
+      events:{
+        onReady:function(event){
+
+          document.body.addEventListener(
+            'click',
+            function(){
+              event.target.playVideo();
+            },
+            {once:true}
+          );
+
+        }
+      }
+    }
+  );
+}
+
+</script>
+
+</body>
+</html>
