@@ -1,100 +1,6 @@
-<!-- ========================= -->
-<!-- DARK PINK RED ROMANTIC UI -->
-<!-- ========================= -->
-
-<body>
-
-<!-- FLOWER RAIN -->
-<div class="flowers"></div>
-
-<!-- CONFETTI -->
-<canvas id="confetti"></canvas>
-
-<!-- MUSIC -->
-<div class="spotify-card">
-  <img src="https://i.scdn.co/image/ab67616d0000b27350a3147b4edd7701a876c6ce">
-
-  <div class="spotify-info">
-    <h3>Perfect ❤️</h3>
-    <p>Ed Sheeran</p>
-
-    <div class="progress-bar">
-      <div class="progress"></div>
-    </div>
-  </div>
-</div>
-
-<!-- HIDDEN YOUTUBE MUSIC -->
-<div id="youtube-player"></div>
-
-<!-- HERO -->
-<section class="hero">
-
-  <div class="hero-content">
-
-    <h1>
-      Happy Birthday <br>
-      Mila Salsa ❤️
-    </h1>
-
-    <p>
-      You are my today and all of my tomorrows ✨
-    </p>
-
-    <button onclick="openLetter()">
-      Open Surprise 💌
-    </button>
-
-  </div>
-
-</section>
-
-<!-- LETTER -->
-<section class="letter-section">
-
-  <div class="envelope" onclick="openEnvelope()">
-
-    <div class="top"></div>
-
-    <div class="paper" id="paper">
-
-      <h2>For Mila ❤️</h2>
-
-      <p>
-        Selamat ulang tahun sayang ❤️<br><br>
-
-        Terima kasih sudah hadir di hidupku dan membuat semuanya terasa lebih indah.
-
-        Aku harap di umur baru ini semua impian kamu tercapai, sehat selalu, dan bahagia terus yaa ✨
-
-        I love you endlessly 💖
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- GALLERY -->
-<section class="gallery">
-
-  <img src="foto1.jpg">
-  <img src="foto2.jpg">
-  <img src="foto3.jpg">
-
-</section>
-
-<!-- QR -->
-<section class="qr-section">
-
-  <h2>Scan For Surprise ❤️</h2>
-
-  <img src="qr.png" class="qr">
-
-</section>
-
-<style>
+/* ========================= */
+/* FIXED FULL ROMANTIC STYLE */
+/* ========================= */
 
 *{
   margin:0;
@@ -102,30 +8,32 @@
   box-sizing:border-box;
 }
 
+html{
+  scroll-behavior:smooth;
+}
+
 body{
-  font-family:Poppins;
-  background:
-  radial-gradient(circle at top,#ff006a,#120018 70%);
+  font-family:'Poppins',sans-serif;
   overflow-x:hidden;
+  background:
+  linear-gradient(
+    180deg,
+    #1a001f 0%,
+    #4b003c 40%,
+    #870048 100%
+  );
+
   color:white;
+  position:relative;
 }
 
-/* FLOWER RAIN */
+/* SECTION */
 
-.flower{
-  position:fixed;
-  top:-20px;
-  animation:fall linear forwards;
-  z-index:1;
-  pointer-events:none;
-}
-
-@keyframes fall{
-  to{
-    transform:
-    translateY(110vh)
-    rotate(360deg);
-  }
+section{
+  width:100%;
+  padding:90px 20px;
+  position:relative;
+  z-index:2;
 }
 
 /* HERO */
@@ -135,131 +43,269 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  text-align:center;
-  position:relative;
-  z-index:2;
 }
 
 .hero-content{
-  background:rgba(255,255,255,0.08);
+  width:100%;
+  max-width:720px;
+  padding:50px 35px;
+  border-radius:35px;
+
+  background:
+  rgba(255,255,255,0.08);
+
   backdrop-filter:blur(14px);
-  padding:40px;
-  border-radius:30px;
-  border:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 0 40px #ff0080;
+
+  border:
+  1px solid rgba(255,255,255,0.12);
+
+  box-shadow:
+  0 0 60px rgba(255,0,120,0.45);
+
+  text-align:center;
 }
 
 .hero h1{
-  font-size:5rem;
-  color:#ff7eb6;
-  text-shadow:0 0 20px #ff0080;
+  font-size:4.5rem;
+  line-height:1.1;
+  color:#ffc1dc;
+
+  text-shadow:
+  0 0 25px #ff0080;
 }
 
 .hero p{
   margin-top:20px;
   font-size:1.2rem;
+  opacity:0.95;
 }
 
+/* BUTTON */
+
 button{
-  margin-top:25px;
+  margin-top:28px;
   border:none;
-  padding:15px 35px;
+  padding:15px 38px;
   border-radius:999px;
-  background:#ff0080;
+
+  background:
+  linear-gradient(
+    135deg,
+    #ff0080,
+    #ff4fa3
+  );
+
   color:white;
-  cursor:pointer;
   font-size:1rem;
-  box-shadow:0 0 20px #ff0080;
+  cursor:pointer;
+
+  box-shadow:
+  0 0 25px rgba(255,0,128,0.6);
+
+  transition:0.3s ease;
+}
+
+button:hover{
+  transform:scale(1.05);
+}
+
+/* FLOWER RAIN */
+
+.flower{
+  position:fixed;
+  top:-20px;
+  pointer-events:none;
+  z-index:1;
+
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+
+  to{
+    transform:
+    translateY(110vh)
+    rotate(360deg);
+  }
+
 }
 
 /* SPOTIFY */
 
 .spotify-card{
+
   position:fixed;
-  bottom:20px;
+
   left:20px;
+  bottom:20px;
+
   width:320px;
-  background:#111;
-  border-radius:25px;
+
+  background:
+  rgba(0,0,0,0.85);
+
+  border-radius:24px;
+
   padding:15px;
+
   display:flex;
+  align-items:center;
   gap:15px;
+
   z-index:999;
-  border:1px solid #ff0080;
-  box-shadow:0 0 30px #ff0080;
+
+  border:
+  1px solid rgba(255,0,120,0.4);
+
+  box-shadow:
+  0 0 30px rgba(255,0,120,0.45);
+
 }
 
 .spotify-card img{
-  width:80px;
-  height:80px;
-  border-radius:15px;
+
+  width:78px;
+  height:78px;
+
+  border-radius:16px;
   object-fit:cover;
+
 }
 
 .spotify-info{
   flex:1;
 }
 
+.spotify-info h3{
+  font-size:1.1rem;
+}
+
+.spotify-info p{
+  opacity:0.7;
+  margin-top:4px;
+}
+
 .progress-bar{
-  margin-top:15px;
+
   width:100%;
   height:5px;
+
   background:#333;
+
   border-radius:999px;
+
+  margin-top:15px;
+
   overflow:hidden;
 }
 
 .progress{
-  width:65%;
+
+  width:60%;
   height:100%;
+
   background:#ff0080;
-  animation:move 5s infinite linear;
+
+  border-radius:999px;
+
+  animation:music 5s infinite linear;
 }
 
-@keyframes move{
-  0%{width:10%}
-  50%{width:80%}
-  100%{width:30%}
+@keyframes music{
+
+  0%{
+    width:15%;
+  }
+
+  50%{
+    width:75%;
+  }
+
+  100%{
+    width:30%;
+  }
+
 }
 
-/* ENVELOPE */
+/* LETTER */
 
 .letter-section{
   display:flex;
   justify-content:center;
-  padding:100px 20px;
+  align-items:center;
 }
 
 .envelope{
+
+  position:relative;
+
   width:340px;
   height:240px;
-  position:relative;
+
   cursor:pointer;
+
+  perspective:1000px;
 }
 
 .top{
+
   position:absolute;
+
   width:100%;
   height:120px;
-  background:#ff4f95;
-  clip-path:polygon(0 0,100% 0,50% 100%);
-  transition:1s;
+
+  background:
+  linear-gradient(
+    135deg,
+    #ff5ca8,
+    #ff2f89
+  );
+
+  clip-path:
+  polygon(
+    0 0,
+    100% 0,
+    50% 100%
+  );
+
   transform-origin:top;
+
+  transition:1s ease;
+
   z-index:5;
+
+  border-radius:12px;
 }
 
 .paper{
+
   position:absolute;
+
   width:90%;
-  height:220px;
+  height:230px;
+
   background:white;
   color:#222;
+
   left:5%;
   top:20px;
-  border-radius:20px;
-  padding:20px;
-  transform:translateY(40px);
-  transition:1s;
+
+  border-radius:22px;
+
+  padding:25px;
+
+  transition:1s ease;
+
+  transform:translateY(45px);
+
+  z-index:2;
+
+  overflow:auto;
+}
+
+.paper h2{
+  color:#ff0080;
+  margin-bottom:15px;
 }
 
 .envelope.open .top{
@@ -267,129 +313,97 @@ button{
 }
 
 .envelope.open .paper{
-  transform:translateY(-100px);
+  transform:translateY(-110px);
 }
 
 /* GALLERY */
 
 .gallery{
+
+  width:100%;
+
   display:grid;
+
   grid-template-columns:
-  repeat(auto-fit,minmax(250px,1fr));
+  repeat(
+    auto-fit,
+    minmax(240px,1fr)
+  );
+
   gap:20px;
-  padding:50px;
+
+  padding:20px;
 }
 
 .gallery img{
+
   width:100%;
-  border-radius:25px;
-  height:350px;
+  height:340px;
+
   object-fit:cover;
-  border:2px solid #ff0080;
-  box-shadow:0 0 25px #ff0080;
+
+  border-radius:25px;
+
+  border:
+  2px solid rgba(255,0,120,0.5);
+
+  box-shadow:
+  0 0 25px rgba(255,0,120,0.4);
+
+  transition:0.4s ease;
+}
+
+.gallery img:hover{
+  transform:scale(1.03);
 }
 
 /* QR */
 
 .qr-section{
   text-align:center;
-  padding:80px 20px;
+}
+
+.qr-section h2{
+  margin-bottom:25px;
 }
 
 .qr{
+
   width:220px;
-  margin-top:20px;
+
   border-radius:25px;
-  border:5px solid #ff0080;
-  box-shadow:0 0 30px #ff0080;
+
+  border:
+  5px solid #ff0080;
+
+  box-shadow:
+  0 0 35px rgba(255,0,120,0.6);
 }
 
-</style>
+/* MOBILE */
 
-<script>
+@media(max-width:768px){
 
-/* FLOWERS */
+  .hero h1{
+    font-size:3rem;
+  }
 
-function createFlower(){
+  .hero-content{
+    padding:40px 25px;
+  }
 
-  const flower=document.createElement('div');
+  .spotify-card{
 
-  flower.classList.add('flower');
+    width:280px;
 
-  flower.innerHTML='🌸';
+    left:50%;
+    transform:translateX(-50%);
 
-  flower.style.left=Math.random()*100+'vw';
+    bottom:15px;
+  }
 
-  flower.style.fontSize=
-  Math.random()*20+15+'px';
-
-  flower.style.animationDuration=
-  Math.random()*5+5+'s';
-
-  document.body.appendChild(flower);
-
-  setTimeout(()=>{
-    flower.remove();
-  },10000);
+  .gallery{
+    grid-template-columns:1fr;
+  }
 
 }
-
-setInterval(createFlower,300);
-
-/* ENVELOPE */
-
-function openEnvelope(){
-  document
-  .querySelector('.envelope')
-  .classList.toggle('open');
-}
-
-/* YOUTUBE MUSIC */
-
-var tag=document.createElement('script');
-
-tag.src=
-"https://www.youtube.com/iframe_api";
-
-var firstScriptTag=
-document.getElementsByTagName('script')[0];
-
-firstScriptTag.parentNode
-.insertBefore(tag,firstScriptTag);
-
-var player;
-
-function onYouTubeIframeAPIReady(){
-
-  player=new YT.Player(
-    'youtube-player',
-    {
-      height:'0',
-      width:'0',
-      videoId:'2Vv-BfVoq4g',
-
-      playerVars:{
-        autoplay:1,
-        loop:1,
-        controls:0,
-        playlist:'2Vv-BfVoq4g'
-      },
-
-      events:{
-        onReady:function(event){
-
-          document.body.addEventListener(
-            'click',
-            function(){
-              event.target.playVideo();
-            },
-            {once:true}
-          );
-
-        }
-      }
-    }
-  );
-}
-
-</script>
