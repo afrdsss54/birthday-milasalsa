@@ -458,9 +458,9 @@
     </div>
   </div>
 
-  <audio autoplay loop>
-    <source src="https://github.com/afrdsss54/birthday-milasalsa/blob/main/music.mp3" type="audio/mp3">
-  </audio>
+ <audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mp3">
+</audio>
 
   <div class="music">
     <div class="spotify-card">
@@ -601,7 +601,16 @@
     </div>
   </section>
 
-  <script>
+
+    <script>
+  window.addEventListener('click', () => {
+    const music = document.getElementById('bgMusic');
+
+    if (music.paused) {
+      music.play();
+    }
+  });
+</script>
     function checkPassword() {
       const password = document.getElementById('passwordInput').value;
 
