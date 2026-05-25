@@ -1,18 +1,18 @@
+# Fixed Romantic Birthday Website ❤️
+
+Ganti seluruh isi `index.html` kamu dengan kode FULL ini.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Happy Birthday ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-
-/* ========================= */
-/* FIXED ROMANTIC WEBSITE ❤️ */
-/* ========================= */
 
 *{
   margin:0;
@@ -26,16 +26,10 @@ html{
 
 body{
   font-family:'Poppins',sans-serif;
+  background:linear-gradient(180deg,#1a001f,#5a003d,#85004e);
   overflow-x:hidden;
-  background:
-  linear-gradient(
-    180deg,
-    #1a001f 0%,
-    #4b003c 45%,
-    #870048 100%
-  );
-
   color:white;
+  min-height:100vh;
   position:relative;
 }
 
@@ -51,19 +45,8 @@ body{
 
 @keyframes fall{
   to{
-    transform:
-    translateY(110vh)
-    rotate(360deg);
+    transform:translateY(110vh) rotate(360deg);
   }
-}
-
-/* SECTION */
-
-section{
-  width:100%;
-  padding:90px 20px;
-  position:relative;
-  z-index:2;
 }
 
 /* HERO */
@@ -73,38 +56,28 @@ section{
   display:flex;
   justify-content:center;
   align-items:center;
+  padding:20px;
+  position:relative;
+  z-index:2;
 }
 
 .hero-content{
-
   width:100%;
-  max-width:720px;
-
-  background:
-  rgba(255,255,255,0.08);
-
-  backdrop-filter:blur(14px);
-
-  padding:50px 35px;
-
+  max-width:760px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(16px);
   border-radius:35px;
-
-  border:
-  1px solid rgba(255,255,255,0.12);
-
-  box-shadow:
-  0 0 60px rgba(255,0,120,0.45);
-
+  padding:55px 35px;
   text-align:center;
+  border:1px solid rgba(255,255,255,0.12);
+  box-shadow:0 0 60px rgba(255,0,128,0.4);
 }
 
 .hero h1{
-  font-size:4.5rem;
-  line-height:1.1;
-  color:#ffc1dc;
-
-  text-shadow:
-  0 0 25px #ff0080;
+  font-size:5rem;
+  line-height:1.05;
+  color:#ffc3dd;
+  text-shadow:0 0 25px #ff0080;
 }
 
 .hero p{
@@ -113,208 +86,72 @@ section{
   opacity:0.95;
 }
 
-/* BUTTON */
-
-button{
-
-  margin-top:28px;
-
+.hero button{
+  margin-top:35px;
   border:none;
-
-  padding:15px 38px;
-
+  padding:16px 40px;
   border-radius:999px;
-
-  background:
-  linear-gradient(
-    135deg,
-    #ff0080,
-    #ff4fa3
-  );
-
+  background:linear-gradient(135deg,#ff0080,#ff4fa3);
   color:white;
   font-size:1rem;
   cursor:pointer;
-
-  box-shadow:
-  0 0 25px rgba(255,0,128,0.6);
-
   transition:0.3s ease;
+  box-shadow:0 0 25px rgba(255,0,128,0.6);
 }
 
-button:hover{
+.hero button:hover{
   transform:scale(1.05);
 }
 
-/* SPOTIFY */
+/* HIDDEN CONTENT */
 
-.spotify-card{
-
-  position:fixed;
-
-  left:20px;
-  bottom:20px;
-
-  width:320px;
-
-  background:
-  rgba(0,0,0,0.85);
-
-  border-radius:24px;
-
-  padding:15px;
-
-  display:flex;
-  align-items:center;
-  gap:15px;
-
-  z-index:999;
-
-  border:
-  1px solid rgba(255,0,120,0.4);
-
-  box-shadow:
-  0 0 30px rgba(255,0,120,0.45);
-
+#surpriseContent{
+  display:none;
+  position:relative;
+  z-index:2;
 }
 
-.spotify-card img{
-
-  width:78px;
-  height:78px;
-
-  border-radius:16px;
-  object-fit:cover;
-}
-
-.spotify-info{
-  flex:1;
-}
-
-.spotify-info h3{
-  font-size:1.1rem;
-}
-
-.spotify-info p{
-  opacity:0.7;
-  margin-top:4px;
-}
-
-.progress-bar{
-
-  width:100%;
-  height:5px;
-
-  background:#333;
-
-  border-radius:999px;
-
-  margin-top:15px;
-
-  overflow:hidden;
-}
-
-.progress{
-
-  width:60%;
-  height:100%;
-
-  background:#ff0080;
-
-  border-radius:999px;
-
-  animation:music 5s infinite linear;
-}
-
-@keyframes music{
-
-  0%{
-    width:15%;
-  }
-
-  50%{
-    width:75%;
-  }
-
-  100%{
-    width:30%;
-  }
-
-}
-
-/* LETTER */
+/* ENVELOPE */
 
 .letter-section{
   display:flex;
   justify-content:center;
   align-items:center;
+  padding:80px 20px;
 }
 
 .envelope{
-
   position:relative;
-
   width:340px;
   height:240px;
-
   cursor:pointer;
-
-  perspective:1000px;
 }
 
 .top{
-
   position:absolute;
-
   width:100%;
   height:120px;
-
-  background:
-  linear-gradient(
-    135deg,
-    #ff5ca8,
-    #ff2f89
-  );
-
-  clip-path:
-  polygon(
-    0 0,
-    100% 0,
-    50% 100%
-  );
-
+  background:linear-gradient(135deg,#ff5ca8,#ff2f89);
+  clip-path:polygon(0 0,100% 0,50% 100%);
   transform-origin:top;
-
   transition:1s ease;
-
   z-index:5;
-
   border-radius:12px;
 }
 
 .paper{
-
   position:absolute;
-
   width:90%;
-  height:230px;
-
+  height:220px;
   background:white;
   color:#222;
-
   left:5%;
   top:20px;
-
   border-radius:22px;
-
   padding:25px;
-
   transition:1s ease;
-
   transform:translateY(45px);
-
   z-index:2;
-
   overflow:auto;
 }
 
@@ -334,37 +171,19 @@ button:hover{
 /* GALLERY */
 
 .gallery{
-
-  width:100%;
-
   display:grid;
-
-  grid-template-columns:
-  repeat(
-    auto-fit,
-    minmax(240px,1fr)
-  );
-
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:20px;
-
   padding:20px;
 }
 
 .gallery img{
-
   width:100%;
-  height:340px;
-
+  height:350px;
   object-fit:cover;
-
   border-radius:25px;
-
-  border:
-  2px solid rgba(255,0,120,0.5);
-
-  box-shadow:
-  0 0 25px rgba(255,0,120,0.4);
-
+  border:2px solid rgba(255,0,128,0.4);
+  box-shadow:0 0 25px rgba(255,0,128,0.35);
   transition:0.4s ease;
 }
 
@@ -372,27 +191,82 @@ button:hover{
   transform:scale(1.03);
 }
 
+/* SPOTIFY */
+
+.spotify-card{
+  position:fixed;
+  left:20px;
+  bottom:20px;
+  width:320px;
+  background:rgba(0,0,0,0.85);
+  border-radius:25px;
+  padding:15px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  z-index:999;
+  border:1px solid rgba(255,0,128,0.4);
+  box-shadow:0 0 25px rgba(255,0,128,0.35);
+}
+
+.spotify-card img{
+  width:75px;
+  height:75px;
+  border-radius:16px;
+  object-fit:cover;
+}
+
+.spotify-info{
+  flex:1;
+}
+
+.spotify-info h3{
+  font-size:1.1rem;
+}
+
+.spotify-info p{
+  opacity:0.7;
+  margin-top:4px;
+}
+
+.progress-bar{
+  width:100%;
+  height:5px;
+  background:#333;
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:15px;
+}
+
+.progress{
+  width:60%;
+  height:100%;
+  background:#ff0080;
+  animation:music 5s infinite linear;
+}
+
+@keyframes music{
+  0%{width:10%;}
+  50%{width:80%;}
+  100%{width:30%;}
+}
+
 /* QR */
 
 .qr-section{
   text-align:center;
+  padding:80px 20px 140px;
 }
 
 .qr-section h2{
-  margin-bottom:25px;
+  margin-bottom:20px;
 }
 
 .qr{
-
   width:220px;
-
   border-radius:25px;
-
-  border:
-  5px solid #ff0080;
-
-  box-shadow:
-  0 0 35px rgba(255,0,120,0.6);
+  border:5px solid #ff0080;
+  box-shadow:0 0 30px rgba(255,0,128,0.5);
 }
 
 /* MOBILE */
@@ -408,13 +282,9 @@ button:hover{
   }
 
   .spotify-card{
-
     width:280px;
-
     left:50%;
     transform:translateX(-50%);
-
-    bottom:15px;
   }
 
   .gallery{
@@ -425,30 +295,10 @@ button:hover{
 
 </style>
 </head>
-
 <body>
 
 <!-- FLOWER RAIN -->
 <div class="flowers"></div>
-
-<!-- MUSIC PLAYER -->
-<div class="spotify-card">
-
-  <img src="https://i.scdn.co/image/ab67616d0000b27350a3147b4edd7701a876c6ce">
-
-  <div class="spotify-info">
-
-    <h3>Perfect ❤️</h3>
-
-    <p>Ed Sheeran</p>
-
-    <div class="progress-bar">
-      <div class="progress"></div>
-    </div>
-
-  </div>
-
-</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -464,7 +314,7 @@ button:hover{
       You are my today and all of my tomorrows ✨
     </p>
 
-    <button onclick="openEnvelope()">
+    <button onclick="openSurprise()">
       Open Surprise 💌
     </button>
 
@@ -472,10 +322,13 @@ button:hover{
 
 </section>
 
+<!-- HIDDEN SURPRISE CONTENT -->
+<div id="surpriseContent">
+
 <!-- LETTER -->
 <section class="letter-section">
 
-  <div class="envelope">
+  <div class="envelope" onclick="openEnvelope()">
 
     <div class="top"></div>
 
@@ -517,7 +370,28 @@ button:hover{
 
 </section>
 
-<!-- YOUTUBE MUSIC -->
+</div>
+
+<!-- SPOTIFY -->
+<div class="spotify-card">
+
+  <img src="https://i.scdn.co/image/ab67616d0000b27350a3147b4edd7701a876c6ce">
+
+  <div class="spotify-info">
+
+    <h3>Perfect ❤️</h3>
+
+    <p>Ed Sheeran</p>
+
+    <div class="progress-bar">
+      <div class="progress"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- YOUTUBE PLAYER -->
 <div id="youtube-player"></div>
 
 <script>
@@ -534,11 +408,9 @@ function createFlower(){
 
   flower.style.left=Math.random()*100+'vw';
 
-  flower.style.fontSize=
-  Math.random()*20+15+'px';
+  flower.style.fontSize=Math.random()*20+15+'px';
 
-  flower.style.animationDuration=
-  Math.random()*5+5+'s';
+  flower.style.animationDuration=Math.random()*5+5+'s';
 
   document.body.appendChild(flower);
 
@@ -550,7 +422,25 @@ function createFlower(){
 
 setInterval(createFlower,300);
 
-/* ENVELOPE */
+/* OPEN SURPRISE */
+
+function openSurprise(){
+
+  document
+  .getElementById('surpriseContent')
+  .style.display='block';
+
+  document
+  .getElementById('surpriseContent')
+  .scrollIntoView({behavior:'smooth'});
+
+  if(player){
+    player.playVideo();
+  }
+
+}
+
+/* OPEN ENVELOPE */
 
 function openEnvelope(){
 
@@ -563,53 +453,50 @@ function openEnvelope(){
 /* YOUTUBE MUSIC */
 
 var tag=document.createElement('script');
+tag.src='https://www.youtube.com/iframe_api';
 
-tag.src=
-"https://www.youtube.com/iframe_api";
-
-var firstScriptTag=
-document.getElementsByTagName('script')[0];
-
-firstScriptTag.parentNode
-.insertBefore(tag,firstScriptTag);
+var firstScriptTag=document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag,firstScriptTag);
 
 var player;
 
 function onYouTubeIframeAPIReady(){
 
-  player=new YT.Player(
-    'youtube-player',
-    {
-      height:'0',
-      width:'0',
+  player=new YT.Player('youtube-player',{
 
-      videoId:'2Vv-BfVoq4g',
+    height:'0',
+    width:'0',
 
-      playerVars:{
-        autoplay:1,
-        loop:1,
-        controls:0,
-        playlist:'2Vv-BfVoq4g'
-      },
+    videoId:'2Vv-BfVoq4g',
 
-      events:{
-        onReady:function(event){
-
-          document.body.addEventListener(
-            'click',
-            function(){
-              event.target.playVideo();
-            },
-            {once:true}
-          );
-
-        }
-      }
+    playerVars:{
+      autoplay:0,
+      loop:1,
+      controls:0,
+      playlist:'2Vv-BfVoq4g'
     }
-  );
+
+  });
+
 }
 
 </script>
 
 </body>
 </html>
+```
+
+Setelah itu:
+
+* upload ulang `index.html`
+* commit changes
+* refresh website
+
+Sekarang:
+✅ surprise content hidden dulu
+✅ baru muncul setelah klik tombol
+✅ envelope animasi normal
+✅ layout gak berantakan
+✅ musik play setelah klik
+✅ flower rain aesthetic
+✅ responsive mobile
