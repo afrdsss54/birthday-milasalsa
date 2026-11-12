@@ -623,6 +623,33 @@ body.lightbox-open { overflow:hidden; }
   .flower { display:none; }
 }
 
+
+/* THREE NEW SURPRISES */
+.surprise-action {text-align:center;padding:20px 20px 40px}
+.scratch-wrap {position:relative;max-width:390px;height:205px;margin:25px auto 12px;border-radius:22px;overflow:hidden;box-shadow:0 0 35px #ff3c9366;touch-action:none;background:linear-gradient(140deg,#fff0f7,#ffd2e6);}
+.scratch-secret {position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px;color:#9b1454;text-align:center;font-size:clamp(16px,4vw,21px);font-weight:700;line-height:1.6}
+.scratch-secret span{font-size:32px}
+#scratchCanvas{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair;touch-action:none}
+.scratch-hint{font-size:14px!important;color:#ffd4e5}
+.scratch-reveal-btn{font-size:13px;padding:11px 20px;margin-top:8px}
+.cake-scene{position:relative;width:min(100%,310px);height:265px;margin:24px auto 12px;display:flex;align-items:flex-end;justify-content:center;}
+.cake-base{position:absolute;bottom:12px;width:245px;height:118px;border-radius:22px 22px 28px 28px;background:linear-gradient(#ffacd1 0 32%,#f75b9d 33% 68%,#d9347b 69%);box-shadow:0 15px 35px #ff2b8b77,inset 0 -12px #bd225d;}
+.cake-base::before{content:'💗  MILA  💗';position:absolute;top:44px;left:0;width:100%;text-align:center;color:#fff;font-size:19px;font-weight:700;text-shadow:0 2px 6px #9d175b}
+.cake-icing{position:absolute;bottom:115px;width:245px;height:37px;border-radius:50%;background:#ffe2ef;border:6px solid #ffb4d4}
+.candle-button{position:absolute;bottom:146px;left:50%;transform:translateX(-50%);margin:0;padding:0;width:54px;height:110px;background:transparent;box-shadow:none;border:0;z-index:3;cursor:pointer}
+.candle-button:hover{transform:translateX(-50%) scale(1.05)}
+.candle-stick{position:absolute;bottom:0;left:21px;width:13px;height:64px;border-radius:4px;background:repeating-linear-gradient(45deg,#fff 0 9px,#ff5c9d 9px 18px);box-shadow:0 0 10px #fff7}
+.candle-flame{position:absolute;bottom:65px;left:18px;width:20px;height:32px;background:linear-gradient(#fff5a0,#ffae32,#ff5c55);border-radius:60% 60% 55% 55%;transform-origin:50% 100%;animation:flicker .7s ease-in-out infinite alternate;box-shadow:0 0 25px #ffbe42,0 0 55px #ff6b5d}
+.candle-button.blown .candle-flame{display:none}
+@keyframes flicker{from{transform:rotate(-9deg) scale(.9)}to{transform:rotate(8deg) scale(1.08)}}
+#cakeMessage{min-height:50px;color:#ffe0ee;font-weight:600}
+#heartBurstLayer{position:fixed;inset:0;z-index:100001;pointer-events:none;overflow:hidden}
+.burst-heart{position:absolute;left:50%;top:50%;font-size:clamp(18px,4vw,35px);animation:heartFly 1.8s cubic-bezier(.16,.68,.3,1) forwards;will-change:transform,opacity}
+@keyframes heartFly{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}15%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) rotate(var(--rot)) scale(var(--size))}}
+.ending-love{font-size:clamp(28px,7vw,50px);color:#ffc1dc;text-shadow:0 0 28px #ff2f93;animation:letterFade .8s ease both;margin:20px 0}
+@media(max-width:600px){.scratch-wrap{height:190px}.cake-scene{transform:scale(.93);margin-top:8px;margin-bottom:0}.surprise-action{padding-bottom:45px}}
+@media(prefers-reduced-motion:reduce){.candle-flame,.burst-heart,.ending-love{animation:none}}
+
 </style>
 </head>
 
@@ -925,6 +952,50 @@ body.lightbox-open { overflow:hidden; }
 
 </section>
 
+
+<!-- BONUS SURPRISE: SCRATCH CARD -->
+<section class="hidden-section surprise-action" id="scratchInvite">
+  <button onclick="openScratch()">Ada Rahasia Buat Kamu 💌</button>
+</section>
+<section class="hidden-section" id="scratchSection">
+  <div class="memory-card">
+    <h2>Surat Rahasia Untuk Mila 💌</h2>
+    <p class="scratch-hint">Gosok kartu pink ini pakai jari kamu sampai pesannya muncul ✨</p>
+    <div class="scratch-wrap" id="scratchWrap">
+      <div class="scratch-secret"><span>💖</span>Kamu adalah hadiah terindah yang pernah hadir di hidup aku.<br> I love you, Mila ❤️</div>
+      <canvas id="scratchCanvas" aria-label="Lapisan kartu gosok"></canvas>
+    </div>
+    <button class="scratch-reveal-btn" id="revealScratchButton" onclick="revealScratch()">Buka pesan tanpa menggosok 💗</button>
+    <div id="cakeInvite" class="hidden-section"><button onclick="openCake()">Ada Kue Buat Kamu 🎂</button></div>
+  </div>
+</section>
+<!-- BONUS SURPRISE: CAKE -->
+<section class="hidden-section" id="cakeSection">
+  <div class="memory-card">
+    <h2>Make a Wish, Mila! 🎂</h2>
+    <p>Pejamkan mata, buat permintaan, lalu sentuh api lilinnya ❤️</p>
+    <div class="cake-scene">
+      <div class="cake-base"></div><div class="cake-icing"></div>
+      <button id="candleButton" class="candle-button" onclick="blowCandle()" aria-label="Tiup lilin dengan mengetuk" type="button">
+        <span class="candle-stick"></span><span class="candle-flame"></span>
+      </button>
+    </div>
+    <p id="cakeMessage" aria-live="polite">✨ Ketuk lilinnya untuk meniup ✨</p>
+    <div id="heartEndingInvite" class="hidden-section">
+      <button onclick="showHeartEnding()">Satu Kejutan Terakhir ❤️</button>
+    </div>
+  </div>
+</section>
+<section class="hidden-section" id="heartEndingSection">
+  <div class="memory-card">
+    <p>Dan satu hal yang nggak akan berubah...</p>
+    <h2 class="ending-love">I Love You, Mila Salsa ❤️</h2>
+    <p>Semoga semua doa baik kamu terwujud. Terima kasih sudah jadi bagian paling indah dari hariku. 🌸</p>
+    <button onclick="explodeHearts()">Hujan Cinta Lagi 💖</button>
+  </div>
+</section>
+<div id="heartBurstLayer" aria-hidden="true"></div>
+
 <!-- SPOTIFY -->
 
 <button id="mobileMusicToggle" class="mobile-music-toggle" type="button"
@@ -1046,6 +1117,7 @@ function showReasons() {
 }
 function showFinalMessage() {
   reveal('finalSection');
+  document.getElementById('scratchInvite').style.display = 'block';
 }
 
 /* PANEL MUSIK — tombol kecil di HP, buka/tutup saat diklik */
@@ -1151,6 +1223,112 @@ document.addEventListener('keydown', e => {
     }
   }
 });
+
+
+/* SCRATCH CARD — canvas dengan dukungan sentuhan HP */
+let scratchReady = false;
+let scratchFinished = false;
+let scratchDrawing = false;
+let scratchCtx;
+let scratchDistance = 0;
+function openScratch() {
+  reveal('scratchSection');
+  if (!scratchReady) requestAnimationFrame(initScratch);
+}
+function initScratch() {
+  const canvas = document.getElementById('scratchCanvas');
+  const rect = canvas.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = Math.round(rect.width * dpr);
+  canvas.height = Math.round(rect.height * dpr);
+  scratchCtx = canvas.getContext('2d', {willReadFrequently:true});
+  scratchCtx.setTransform(dpr,0,0,dpr,0,0);
+  const gradient = scratchCtx.createLinearGradient(0,0,rect.width,rect.height);
+  gradient.addColorStop(0,'#ff73b4');
+  gradient.addColorStop(1,'#a51d67');
+  scratchCtx.fillStyle = gradient;
+  scratchCtx.fillRect(0,0,rect.width,rect.height);
+  scratchCtx.fillStyle = '#fff';
+  scratchCtx.textAlign = 'center';
+  scratchCtx.font = 'bold 23px Poppins, sans-serif';
+  scratchCtx.fillText('💌 PESAN RAHASIA',rect.width/2,rect.height/2-10);
+  scratchCtx.font = '15px Poppins, sans-serif';
+  scratchCtx.fillText('Gosok di sini ❤️',rect.width/2,rect.height/2+25);
+  scratchReady = true;
+}
+function scratchPoint(e) {
+  const canvas = document.getElementById('scratchCanvas');
+  const rect = canvas.getBoundingClientRect();
+  return {x:e.clientX-rect.left,y:e.clientY-rect.top};
+}
+const scratchCanvas = document.getElementById('scratchCanvas');
+let lastScratchPoint = null;
+scratchCanvas.addEventListener('pointerdown', e => {
+  if (scratchFinished || !scratchReady) return;
+  scratchDrawing = true;
+  scratchCanvas.setPointerCapture(e.pointerId);
+  const p = scratchPoint(e);
+  lastScratchPoint = p;
+  scratchCtx.globalCompositeOperation = 'destination-out';
+  scratchCtx.beginPath();scratchCtx.arc(p.x,p.y,22,0,Math.PI*2);scratchCtx.fill();
+});
+scratchCanvas.addEventListener('pointermove', e => {
+  if (!scratchDrawing || scratchFinished) return;
+  const p = scratchPoint(e);
+  scratchCtx.globalCompositeOperation = 'destination-out';
+  scratchCtx.lineWidth = 44;
+  scratchCtx.lineCap = 'round';
+  scratchCtx.beginPath();scratchCtx.moveTo(lastScratchPoint.x,lastScratchPoint.y);
+  scratchCtx.lineTo(p.x,p.y);scratchCtx.stroke();
+  scratchDistance += Math.hypot(p.x-lastScratchPoint.x,p.y-lastScratchPoint.y);
+  lastScratchPoint = p;
+  if (scratchDistance > 900) revealScratch();
+});
+function endScratch(){scratchDrawing=false;lastScratchPoint=null;}
+scratchCanvas.addEventListener('pointerup',endScratch);
+scratchCanvas.addEventListener('pointercancel',endScratch);
+function revealScratch() {
+  if (scratchFinished) return;
+  scratchFinished = true;
+  scratchCanvas.style.transition = 'opacity .5s ease';
+  scratchCanvas.style.opacity = '0';
+  scratchCanvas.style.pointerEvents = 'none';
+  document.getElementById('revealScratchButton').style.display = 'none';
+  document.getElementById('cakeInvite').style.display = 'block';
+}
+function openCake() {reveal('cakeSection');}
+let candleBlown = false;
+function blowCandle() {
+  if (candleBlown) return;
+  candleBlown = true;
+  document.getElementById('candleButton').classList.add('blown');
+  document.getElementById('candleButton').setAttribute('aria-label','Lilin sudah padam');
+  document.getElementById('cakeMessage').textContent = 'Yeay! Semoga semua harapan Mila terkabul. Aamiin ❤️';
+  document.getElementById('heartEndingInvite').style.display = 'block';
+  explodeHearts();
+}
+function showHeartEnding() {reveal('heartEndingSection');explodeHearts();}
+function explodeHearts() {
+  const layer = document.getElementById('heartBurstLayer');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) return;
+  const hearts = ['❤️','💗','💖','💕','🌸','✨'];
+  for (let i=0;i<55;i++) {
+    const h = document.createElement('span');
+    h.className='burst-heart';
+    h.textContent=hearts[Math.floor(Math.random()*hearts.length)];
+    const angle=Math.random()*Math.PI*2;
+    const distance=80+Math.random()*Math.max(innerWidth,innerHeight)*.7;
+    h.style.setProperty('--dx',Math.cos(angle)*distance+'px');
+    h.style.setProperty('--dy',Math.sin(angle)*distance+'px');
+    h.style.setProperty('--rot',(Math.random()*720-360)+'deg');
+    h.style.setProperty('--size',(.7+Math.random()*1.5).toFixed(2));
+    h.style.animationDelay=(Math.random()*.25)+'s';
+    layer.appendChild(h);
+    setTimeout(()=>h.remove(),2400);
+  }
+}
 
 let currentLetter = 1;
 
