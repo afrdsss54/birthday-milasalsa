@@ -551,6 +551,24 @@ button:hover{
 
   
 
+/* MUSIC PLAYER MOBILE: default tersembunyi agar tombol Next tidak tertutup */
+.mobile-music-toggle { display:none; }
+@media (max-width:768px) {
+  .mobile-music-toggle {
+    display:flex; align-items:center; justify-content:center;
+    position:fixed; right:14px; bottom:calc(14px + env(safe-area-inset-bottom));
+    left:auto; z-index:1001; width:52px; height:52px;
+    padding:0; margin:0; border-radius:50%; font-size:23px;
+    box-shadow:0 0 24px rgba(255,0,128,.55);
+  }
+  .spotify-card {
+    display:none; position:fixed; left:auto; right:14px;
+    bottom:calc(76px + env(safe-area-inset-bottom));
+    transform:none; width:min(280px, calc(100vw - 28px));
+    z-index:1000;
+  }
+  .spotify-card.mobile-open { display:flex; }
+}
 /* FULLSCREEN ROMANTIC GALLERY */
 .gallery img { cursor:pointer; }
 .gallery img:focus-visible, button:focus-visible {
@@ -909,7 +927,11 @@ body.lightbox-open { overflow:hidden; }
 
 <!-- SPOTIFY -->
 
-<div class="spotify-card">
+<button id="mobileMusicToggle" class="mobile-music-toggle" type="button"
+        onclick="toggleMusicPanel()" aria-controls="musicPanel"
+        aria-expanded="false" aria-label="Buka pemutar musik">🎵</button>
+
+<div class="spotify-card" id="musicPanel">
 
   <img src="https://i.scdn.co/image/ab67616d0000b27350a3147b4edd7701a876c6ce">
 
@@ -1024,6 +1046,16 @@ function showReasons() {
 }
 function showFinalMessage() {
   reveal('finalSection');
+}
+
+/* PANEL MUSIK — tombol kecil di HP, buka/tutup saat diklik */
+function toggleMusicPanel() {
+  const panel = document.getElementById('musicPanel');
+  const toggle = document.getElementById('mobileMusicToggle');
+  const opened = panel.classList.toggle('mobile-open');
+  toggle.setAttribute('aria-expanded', String(opened));
+  toggle.setAttribute('aria-label', opened ? 'Tutup pemutar musik' : 'Buka pemutar musik');
+  toggle.textContent = opened ? '✕' : '🎵';
 }
 
 /* AUDIO — musik diputar hanya ketika tombol Play diklik */
