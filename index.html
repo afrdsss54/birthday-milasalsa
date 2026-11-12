@@ -539,6 +539,93 @@ button:hover{
 
 }
 
+
+.letter-card {
+  max-width: 650px;
+  margin: 30px auto;
+  padding: 35px 25px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 25px;
+  box-shadow: 0 0 30px rgba(255,0,128,0.15);
+  backdrop-filter: blur(12px);
+  text-align: center;
+}
+
+.letter-page {
+  display: none;
+  opacity: 0;
+}
+
+.letter-page.active {
+  display: block;
+  animation: letterFade 1s ease forwards;
+}
+
+.letter-page h2 {
+  color: #ff9acb;
+  margin-bottom: 25px;
+}
+
+.letter-page p {
+  color: white;
+  font-size: 17px;
+  line-height: 1.9;
+  margin: 18px 0;
+}
+
+.letter-icon {
+  display: block;
+  font-size: 45px;
+  margin-bottom: 20px;
+}
+
+.letter-page button {
+  margin-top: 25px;
+  padding: 13px 28px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #ff4f9a, #c90065);
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(255,0,128,0.3);
+}
+
+.final-letter {
+  padding: 20px 5px;
+}
+
+.final-letter .final-text {
+  font-size: 19px;
+  line-height: 2;
+}
+
+.final-letter h1 {
+  color: #ff8fc5;
+  font-size: clamp(30px, 6vw, 48px);
+  line-height: 1.4;
+  margin: 30px 0;
+  text-shadow: 0 0 25px rgba(255,50,150,0.5);
+}
+
+.final-letter .signature {
+  font-style: italic;
+  color: #ffc2df;
+}
+
+@keyframes letterFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+  
 </style>
 </head>
 
@@ -1028,6 +1115,38 @@ function onYouTubeIframeAPIReady(){
   );
 }
 
+
+let currentLetter = 1;
+
+function nextLetter() {
+  const current = document.getElementById(
+    "letterPage" + currentLetter
+  );
+
+  current.classList.remove("active");
+
+  currentLetter++;
+
+  const next = document.getElementById(
+    "letterPage" + currentLetter
+  );
+
+  next.classList.add("active");
+}
+
+function goToMemory() {
+  document.getElementById("letterSection").style.display = "none";
+
+  const memory = document.getElementById("memorySection");
+  memory.style.display = "block";
+
+  memory.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
+  
 </script>
 
 </body>
