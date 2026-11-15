@@ -1212,8 +1212,8 @@ function updateMusicUI() {
   const playing = allTracks.some(track => !track.paused);
   musicButton.textContent = playing ? '❚❚ Jeda musik' : '▶ Putar musik';
   musicButton.setAttribute('aria-label', playing ? 'Jeda musik' : 'Putar musik');
-  songTitle.textContent = finaleStarted ? 'Perfect ❤️' : 'Mesra-Mesraannya Kecil-Kecilan Dulu ❤️';
-  songArtist.textContent = finaleStarted ? 'Ed Sheeran' : 'Sal Priadi';
+  songTitle.textContent = finaleStarted ? 'Mesra-Mesraannya Kecil-Kecilan Dulu ❤️' : 'Perfect ❤️';
+  songArtist.textContent = finaleStarted ? 'Sal Priadi' : 'Ed Sheeran';
   const duration = activeTrack.duration;
   musicProgress.style.width = Number.isFinite(duration) && duration > 0
     ? (activeTrack.currentTime / duration * 100) + '%' : '0%';
