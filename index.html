@@ -1067,8 +1067,13 @@ body.lightbox-open { overflow:hidden; }
 
   <div class="spotify-info">
 
-    <h3 id="currentSongTitle">Until I Found You ❤️</h3>
-    <p id="currentSongArtist">Stephen Sanchez</p> 
+    <h3>
+      Until I Found You ❤️
+    </h3>
+
+    <p>
+      Stephen Sanchez
+    </p> 
     <button id="musicButton" class="music-button" type="button" onclick="toggleMusic()" aria-label="Putar musik">▶ Putar musik</button>
     <div class="progress-bar"><div class="progress" id="musicProgress"></div></div>
 
@@ -1076,10 +1081,9 @@ body.lightbox-open { overflow:hidden; }
 
 </div>
 
-<!-- Siapkan music1.mp3 dan music2.mp3 di folder yang sama dengan index.html.
-     Pastikan kamu memiliki izin publikasi untuk rekaman yang digunakan. -->
-<audio id="birthdayMusic" src="music1.mp3" preload="metadata" loop></audio>
-<audio id="finaleMusic" src="music2.mp3" preload="none" loop></audio>
+<!-- Letakkan music1.mp3 dan music2.mp3 (dengan izin penggunaan) bersama index.html. -->
+<audio id="birthdayMusic" src="music1.mp3" preload="auto" loop></audio>
+<audio id="finaleMusic" src="music2.mp3" preload="auto" loop></audio>
 
 
 <!-- LIGHTBOX FOTO: diletakkan di luar section agar selalu di atas semua konten -->
@@ -1113,9 +1117,6 @@ function checkPassword(){
     document
     .getElementById('passwordScreen')
     .style.display='none';
-
-    // Mulai musik langsung dari gesture klik tombol Open agar diizinkan browser HP.
-    startMusicAfterUnlock();
 
   }else{
 
@@ -1191,129 +1192,112 @@ function toggleMusicPanel() {
   toggle.textContent = opened ? '✕' : '🎵';
 }
 
-/* DUA LAGU — mulai setelah password benar, crossfade 3 detik setelah lilin ditiup.
-   Jika browser memblokir pemutaran, tombol manual tetap tersedia. */
+/* AUDIO — dua lagu, mulai saat password benar, crossfade saat lilin padam */
 const audio = document.getElementById('birthdayMusic');
 const finaleAudio = document.getElementById('finaleMusic');
 const musicButton = document.getElementById('musicButton');
 const musicProgress = document.getElementById('musicProgress');
-const songTitle = document.getElementById('currentSongTitle');
-const songArtist = document.getElementById('currentSongArtist');
-const allTracks = [audio, finaleAudio];
-let activeTrack = audio;
+const musicTitle = document.querySelector('#musicPanel h3');
+const musicArtist = document.querySelector('#musicPanel .spotify-info p');
+const musicCover = document.querySelector('#musicPanel > img');
+const musicTracks = [audio, finaleAudio];
+const normalVolume = 0.65;
+let currentAudio = audio;
 let finaleStarted = false;
-let crossfadeFrame = 0;
-let crossfadeToken = 0;
-const MUSIC_VOLUME = 0.65;
-audio.volume = MUSIC_VOLUME;
-finaleAudio.volume = 0;
+let crossfadeTimer = null;
+let transitionToken = 0;
+let musicWanted = false;
+
+musicTracks.forEach(track => { track.volume = normalVolume; });
 
 function updateMusicUI() {
-  const playing = allTracks.some(track => !track.paused);
+  const playing = !currentAudio.paused;
   musicButton.textContent = playing ? '❚❚ Jeda musik' : '▶ Putar musik';
   musicButton.setAttribute('aria-label', playing ? 'Jeda musik' : 'Putar musik');
-  songTitle.textContent = finaleStarted ? 'Perfect ❤️' : 'Until I Found You ❤️';
-  songArtist.textContent = finaleStarted ? 'Ed Sheeran' : 'Stephen Sanchez';
-  const duration = activeTrack.duration;
-  musicProgress.style.width = Number.isFinite(duration) && duration > 0
-    ? (activeTrack.currentTime / duration * 100) + '%' : '0%';
+  musicTitle.textContent = finaleStarted ? 'Perfect ❤️' : 'Until I Found You ❤️';
+  musicArtist.textContent = finaleStarted ? 'Ed Sheeran' : 'Stephen Sanchez';
+  // Cover bawaan dipertahankan agar desain asli tidak berubah.
 }
 
-function stopCrossfade() {
-  crossfadeToken++;
-  if (crossfadeFrame) cancelAnimationFrame(crossfadeFrame);
-  crossfadeFrame = 0;
+function musicPlayFailed() {
+  musicWanted = false;
+  updateMusicUI();
+  musicButton.textContent = '▶ Ketuk untuk musik 🎵';
 }
 
-function startMusicAfterUnlock() {
-  // Dipanggil langsung dari klik Open, bukan timer atau autoplay saat load.
-  if (!audio.paused || finaleStarted) return;
-  activeTrack = audio;
-  audio.volume = MUSIC_VOLUME;
-  const attempt = audio.play();
-  if (attempt && typeof attempt.catch === 'function') {
-    attempt.catch(() => {
-      // Jika browser menolak, tombol musik mini tetap bisa dipakai.
-      musicButton.textContent = '▶ Putar musik';
-      musicButton.setAttribute('aria-label', 'Ketuk untuk memutar musik');
-    });
-  }
+function startBirthdayMusic() {
+  musicWanted = true;
+  // Tidak menunggu await sebelum play(): harus dalam event klik pengguna.
+  const attempt = currentAudio.play();
+  if (attempt && typeof attempt.catch === 'function') attempt.catch(musicPlayFailed);
   updateMusicUI();
 }
 
-// Enter di kolom password juga dianggap interaksi pengguna.
-document.getElementById('passwordInput').addEventListener('keydown', event => {
-  if (event.key === 'Enter') checkPassword();
-});
-
-async function toggleMusic() {
-  if (allTracks.some(track => !track.paused)) {
-    stopCrossfade();
-    allTracks.forEach(track => track.pause());
-    activeTrack.volume = MUSIC_VOLUME;
-    allTracks.filter(track => track !== activeTrack).forEach(track => track.volume = 0);
+function toggleMusic() {
+  if (musicWanted && !currentAudio.paused) {
+    musicWanted = false;
+    transitionToken++;
+    if (crossfadeTimer !== null) clearInterval(crossfadeTimer);
+    crossfadeTimer = null;
+    musicTracks.forEach(track => track.pause());
+    musicTracks.forEach(track => { track.volume = normalVolume; });
     updateMusicUI();
-    return;
+  } else {
+    startBirthdayMusic();
   }
-  try {
-    activeTrack.volume = MUSIC_VOLUME;
-    await activeTrack.play();
-  } catch (error) {
-    alert('Musik belum bisa diputar. Pastikan music1.mp3 dan music2.mp3 ada di folder yang sama dengan index.html.');
-  }
-  updateMusicUI();
 }
 
-async function switchToFinaleMusic() {
+function transitionToFinale() {
   if (finaleStarted) return;
   finaleStarted = true;
-  stopCrossfade();
-  const wasPlaying = !audio.paused;
-  activeTrack = finaleAudio;
-  finaleAudio.currentTime = 0;
-  finaleAudio.volume = 0;
+  transitionToken++;
+  const token = transitionToken;
+  if (crossfadeTimer !== null) clearInterval(crossfadeTimer);
+  crossfadeTimer = null;
+  const previous = currentAudio;
+  currentAudio = finaleAudio;
+  currentAudio.currentTime = 0;
   updateMusicUI();
-  if (!wasPlaying) {
-    audio.pause();
-    finaleAudio.volume = MUSIC_VOLUME;
-    return; // Jangan memulai audio tanpa persetujuan pengguna.
-  }
-  try {
-    await finaleAudio.play();
-  } catch (error) {
-    // Bila browser memblokir audio kedua, tetap putar lagu pertama.
-    finaleStarted = false;
-    activeTrack = audio;
-    updateMusicUI();
+  if (!musicWanted || previous.paused) {
+    previous.pause();
+    currentAudio.volume = normalVolume;
     return;
   }
-  const token = crossfadeToken;
-  const start = performance.now();
-  const duration = 3000;
-  function fade(now) {
-    if (token !== crossfadeToken) return;
-    const ratio = Math.min(1, (now - start) / duration);
-    audio.volume = MUSIC_VOLUME * (1 - ratio);
-    finaleAudio.volume = MUSIC_VOLUME * ratio;
-    if (ratio < 1) {
-      crossfadeFrame = requestAnimationFrame(fade);
-    } else {
-      audio.pause();
-      audio.volume = MUSIC_VOLUME;
-      crossfadeFrame = 0;
-    }
+  currentAudio.volume = 0;
+  const attempt = currentAudio.play();
+  if (attempt && typeof attempt.catch === 'function') {
+    attempt.catch(() => {
+      if (token !== transitionToken) return;
+      previous.pause();
+      currentAudio.volume = normalVolume;
+      musicPlayFailed();
+    });
   }
-  crossfadeFrame = requestAnimationFrame(fade);
+  const startedAt = performance.now();
+  crossfadeTimer = setInterval(() => {
+    if (token !== transitionToken) { clearInterval(crossfadeTimer); crossfadeTimer = null; return; }
+    const fraction = Math.min((performance.now() - startedAt) / 3000, 1);
+    previous.volume = normalVolume * (1 - fraction);
+    currentAudio.volume = normalVolume * fraction;
+    if (fraction >= 1) {
+      clearInterval(crossfadeTimer);
+      crossfadeTimer = null;
+      previous.pause();
+      previous.volume = normalVolume;
+    }
+  }, 50);
 }
 
-allTracks.forEach(track => {
+musicTracks.forEach(track => {
   track.addEventListener('play', updateMusicUI);
   track.addEventListener('pause', updateMusicUI);
   track.addEventListener('timeupdate', () => {
-    if (track === activeTrack) updateMusicUI();
+    if (track !== currentAudio) return;
+    musicProgress.style.width = track.duration && Number.isFinite(track.duration)
+      ? (track.currentTime / track.duration * 100) + '%' : '0%';
   });
   track.addEventListener('error', () => {
-    if (track === activeTrack) musicButton.textContent = '⚠ Musik belum tersedia';
+    if (track === currentAudio) musicButton.textContent = '⚠ File musik tidak ditemukan';
   });
 });
 
@@ -1492,7 +1476,7 @@ let candleBlown = false;
 function blowCandle() {
   if (candleBlown) return;
   candleBlown = true;
-  switchToFinaleMusic();
+  transitionToFinale();
   document.getElementById('candleButton').classList.add('blown');
   document.getElementById('candleButton').setAttribute('aria-label','Lilin sudah padam');
   document.getElementById('cakeMessage').textContent = 'Yeay! Semoga semua harapan Mila terkabul. Aamiin ❤️';
