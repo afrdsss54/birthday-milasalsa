@@ -1067,8 +1067,8 @@ body.lightbox-open { overflow:hidden; }
 
   <div class="spotify-info">
 
-    <h3 id="currentSongTitle">Until I Found You ❤️</h3>
-    <p id="currentSongArtist">Stephen Sanchez</p> 
+    <h3 id="currentSongTitle">Perfect ❤️</h3>
+    <p id="currentSongArtist">Ed Sheeran</p> 
     <button id="musicButton" class="music-button" type="button" onclick="toggleMusic()" aria-label="Putar musik">▶ Putar musik</button>
     <div class="progress-bar"><div class="progress" id="musicProgress"></div></div>
 
@@ -1212,8 +1212,8 @@ function updateMusicUI() {
   const playing = allTracks.some(track => !track.paused);
   musicButton.textContent = playing ? '❚❚ Jeda musik' : '▶ Putar musik';
   musicButton.setAttribute('aria-label', playing ? 'Jeda musik' : 'Putar musik');
-  songTitle.textContent = finaleStarted ? 'Perfect ❤️' : 'Until I Found You ❤️';
-  songArtist.textContent = finaleStarted ? 'Ed Sheeran' : 'Stephen Sanchez';
+  songTitle.textContent = finaleStarted ? 'Perfect ❤️' : 'Mesra-Mesraannya Kecil-Kecilan Dulu ❤️';
+  songArtist.textContent = finaleStarted ? 'Ed Sheeran' : 'Sal Priadi';
   const duration = activeTrack.duration;
   musicProgress.style.width = Number.isFinite(duration) && duration > 0
     ? (activeTrack.currentTime / duration * 100) + '%' : '0%';
