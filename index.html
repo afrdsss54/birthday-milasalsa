@@ -1068,11 +1068,11 @@ body.lightbox-open { overflow:hidden; }
   <div class="spotify-info">
 
     <h3>
-      Until I Found You ❤️
+      Perfect ❤️
     </h3>
 
     <p>
-      Stephen Sanchez
+      Ed Sheeran
     </p> 
     <button id="musicButton" class="music-button" type="button" onclick="toggleMusic()" aria-label="Putar musik">▶ Putar musik</button>
     <div class="progress-bar"><div class="progress" id="musicProgress"></div></div>
@@ -1081,9 +1081,8 @@ body.lightbox-open { overflow:hidden; }
 
 </div>
 
-<!-- Letakkan music1.mp3 dan music2.mp3 (dengan izin penggunaan) bersama index.html. -->
-<audio id="birthdayMusic" src="music1.mp3" preload="auto" loop></audio>
-<audio id="finaleMusic" src="music2.mp3" preload="auto" loop></audio>
+<!-- Letakkan file music.mp3 milikmu di folder yang sama dengan index.html. -->
+<audio id="birthdayMusic" src="music.mp3" preload="none" loop></audio>
 
 
 <!-- LIGHTBOX FOTO: diletakkan di luar section agar selalu di atas semua konten -->
@@ -1192,113 +1191,36 @@ function toggleMusicPanel() {
   toggle.textContent = opened ? '✕' : '🎵';
 }
 
-/* AUDIO — dua lagu, mulai saat password benar, crossfade saat lilin padam */
+/* AUDIO — musik diputar hanya ketika tombol Play diklik */
 const audio = document.getElementById('birthdayMusic');
-const finaleAudio = document.getElementById('finaleMusic');
 const musicButton = document.getElementById('musicButton');
 const musicProgress = document.getElementById('musicProgress');
-const musicTitle = document.querySelector('#musicPanel h3');
-const musicArtist = document.querySelector('#musicPanel .spotify-info p');
-const musicCover = document.querySelector('#musicPanel > img');
-const musicTracks = [audio, finaleAudio];
-const normalVolume = 0.65;
-let currentAudio = audio;
-let finaleStarted = false;
-let crossfadeTimer = null;
-let transitionToken = 0;
-let musicWanted = false;
-
-musicTracks.forEach(track => { track.volume = normalVolume; });
-
-function updateMusicUI() {
-  const playing = !currentAudio.paused;
-  musicButton.textContent = playing ? '❚❚ Jeda musik' : '▶ Putar musik';
-  musicButton.setAttribute('aria-label', playing ? 'Jeda musik' : 'Putar musik');
-  musicTitle.textContent = finaleStarted ? 'Perfect ❤️' : 'Until I Found You ❤️';
-  musicArtist.textContent = finaleStarted ? 'Ed Sheeran' : 'Stephen Sanchez';
-  // Cover bawaan dipertahankan agar desain asli tidak berubah.
-}
-
-function musicPlayFailed() {
-  musicWanted = false;
-  updateMusicUI();
-  musicButton.textContent = '▶ Ketuk untuk musik 🎵';
-}
-
-function startBirthdayMusic() {
-  musicWanted = true;
-  // Tidak menunggu await sebelum play(): harus dalam event klik pengguna.
-  const attempt = currentAudio.play();
-  if (attempt && typeof attempt.catch === 'function') attempt.catch(musicPlayFailed);
-  updateMusicUI();
-}
-
-function toggleMusic() {
-  if (musicWanted && !currentAudio.paused) {
-    musicWanted = false;
-    transitionToken++;
-    if (crossfadeTimer !== null) clearInterval(crossfadeTimer);
-    crossfadeTimer = null;
-    musicTracks.forEach(track => track.pause());
-    musicTracks.forEach(track => { track.volume = normalVolume; });
-    updateMusicUI();
-  } else {
-    startBirthdayMusic();
-  }
-}
-
-function transitionToFinale() {
-  if (finaleStarted) return;
-  finaleStarted = true;
-  transitionToken++;
-  const token = transitionToken;
-  if (crossfadeTimer !== null) clearInterval(crossfadeTimer);
-  crossfadeTimer = null;
-  const previous = currentAudio;
-  currentAudio = finaleAudio;
-  currentAudio.currentTime = 0;
-  updateMusicUI();
-  if (!musicWanted || previous.paused) {
-    previous.pause();
-    currentAudio.volume = normalVolume;
+async function toggleMusic() {
+  if (!audio.paused) {
+    audio.pause();
     return;
   }
-  currentAudio.volume = 0;
-  const attempt = currentAudio.play();
-  if (attempt && typeof attempt.catch === 'function') {
-    attempt.catch(() => {
-      if (token !== transitionToken) return;
-      previous.pause();
-      currentAudio.volume = normalVolume;
-      musicPlayFailed();
-    });
+  try {
+    await audio.play();
+  } catch (error) {
+    alert('Musik belum bisa diputar. Pastikan music.mp3 sudah di-upload ke GitHub.');
   }
-  const startedAt = performance.now();
-  crossfadeTimer = setInterval(() => {
-    if (token !== transitionToken) { clearInterval(crossfadeTimer); crossfadeTimer = null; return; }
-    const fraction = Math.min((performance.now() - startedAt) / 3000, 1);
-    previous.volume = normalVolume * (1 - fraction);
-    currentAudio.volume = normalVolume * fraction;
-    if (fraction >= 1) {
-      clearInterval(crossfadeTimer);
-      crossfadeTimer = null;
-      previous.pause();
-      previous.volume = normalVolume;
-    }
-  }, 50);
 }
-
-musicTracks.forEach(track => {
-  track.addEventListener('play', updateMusicUI);
-  track.addEventListener('pause', updateMusicUI);
-  track.addEventListener('timeupdate', () => {
-    if (track !== currentAudio) return;
-    musicProgress.style.width = track.duration && Number.isFinite(track.duration)
-      ? (track.currentTime / track.duration * 100) + '%' : '0%';
-  });
-  track.addEventListener('error', () => {
-    if (track === currentAudio) musicButton.textContent = '⚠ File musik tidak ditemukan';
-  });
+audio.addEventListener('play', () => {
+  musicButton.textContent = '❚❚ Jeda musik';
+  musicButton.setAttribute('aria-label','Jeda musik');
+});
+audio.addEventListener('pause', () => {
+  musicButton.textContent = '▶ Putar musik';
+  musicButton.setAttribute('aria-label','Putar musik');
+});
+audio.addEventListener('timeupdate', () => {
+  musicProgress.style.width = audio.duration && Number.isFinite(audio.duration)
+    ? (audio.currentTime / audio.duration * 100) + '%'
+    : '0%';
+});
+audio.addEventListener('error', () => {
+  musicButton.textContent = '⚠ Musik belum tersedia';
 });
 
 /* GALERI POLAROID + PESAN RAHASIA + HATI */
@@ -1476,7 +1398,6 @@ let candleBlown = false;
 function blowCandle() {
   if (candleBlown) return;
   candleBlown = true;
-  transitionToFinale();
   document.getElementById('candleButton').classList.add('blown');
   document.getElementById('candleButton').setAttribute('aria-label','Lilin sudah padam');
   document.getElementById('cakeMessage').textContent = 'Yeay! Semoga semua harapan Mila terkabul. Aamiin ❤️';
